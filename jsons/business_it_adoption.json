@@ -1,0 +1,18 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Business Use of Information Technology Heatmap.",
+  "data": {"url": "../data/Business_Use_of_Information_Technology.csv"},
+  "mark": "rect",
+  "encoding": {
+    "x": {"field": "REF_AREA", "type": "nominal", "title": "Country / Area"},
+    "y": {"field": "INDICATOR", "type": "nominal", "title": "IT Indicator"},
+    "color": {"field": "OBS_VALUE", "type": "quantitative", "title": "Percentage (%)", "scale": {"scheme": "blues"}},
+    "tooltip": [
+      {"field": "REF_AREA", "type": "nominal", "title": "Area"},
+      {"field": "INDICATOR", "type": "nominal", "title": "Indicator"},
+      {"field": "OBS_VALUE", "type": "quantitative", "title": "Percentage (%)"}
+    ]
+  },
+  "width": 800,
+  "height": 280
+}

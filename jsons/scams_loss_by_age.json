@@ -1,0 +1,22 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Scam reports and financial loss correlation by age group (Advanced Bubble Chart).",
+  "data": {"url": "../data/scams_summary_by_state.csv"},
+  "transform": [
+    {"calculate": "toNumber(replace(datum.Amount_lost, '$', ''))", "as": "Clean_Amount"}
+  ],
+  "mark": {"type": "circle", "opacity": 0.8, "stroke": "black", "strokeWidth": 0.5},
+  "encoding": {
+    "x": {"field": "Complainant_Age", "type": "nominal", "title": "Complainant Age Group"},
+    "y": {"aggregate": "sum", "field": "Clean_Amount", "type": "quantitative", "title": "Total Amount Lost ($)"},
+    "size": {"aggregate": "sum", "field": "Number_of_reports", "type": "quantitative", "title": "Total Reports", "legend": {"symbolType": "circle"}},
+    "color": {"field": "Complainant_Age", "type": "nominal", "legend": null},
+    "tooltip": [
+      {"field": "Complainant_Age", "type": "nominal", "title": "Age Group"},
+      {"aggregate": "sum", "field": "Number_of_reports", "type": "quantitative", "title": "Reports Count"},
+      {"aggregate": "sum", "field": "Clean_Amount", "type": "quantitative", "title": "Total Lost ($)", "format": "$,.2f"}
+    ]
+  },
+  "width": 800,
+  "height": 300
+}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Australia's Digital Future</title>
+  <!-- 引入 Vega, Vega-Lite, Vega-Embed 库 -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.25.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.9.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.0"></script>
+  
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+      max-width: 1000px; 
+      margin: 0 auto; 
+      padding: 40px 20px; 
+      background-color: #f1f5f9;
+      color: #1e293b;
+    }
+    h1 { 
+      text-align: center; 
+      margin-bottom: 40px; 
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .section-header {
+      margin-top: 50px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid #3b82f6;
+    }
+    .section-header h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin: 0;
+    }
+    .chart { 
+      background: #ffffff; 
+      padding: 24px; 
+      border-radius: 16px; 
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      margin-bottom: 32px; 
+    }
+    .chart h3 { 
+      font-size: 1.25rem; 
+      margin-top: 0; 
+      margin-bottom: 16px; 
+      color: #334155; 
+      border-left: 4px solid #3b82f6; 
+      padding-left: 10px; 
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Australia's Digital Future</h1>
+  
+  <!-- Chapter 1 -->
+  <section>
+    <div class="section-header">
+      <h2>Chapter 1 — Connecting Australia</h2>
+    </div>
+
+    <div class="chart">
+      <h3>1. NBN Coverage Fixedline</h3>
+      <div id="nbn_map"></div>
+    </div>
+
+    <div class="chart">
+      <h3>2. Optus 5G Outdoor Coverage</h3>
+      <div id="optic_5g_map"></div>
+    </div>
+
+    <div class="chart">
+      <h3>3. Mobile Network Coverage (Telstra & Optus)</h3>
+      <div id="mobile_coverage_map"></div>
+    </div>
+
+    <div class="chart">
+      <h3>4. Broadband Download Speed Distribution by Technology</h3>
+      <div id="broadband_speed"></div>
+    </div>
+  </section>
+
+  <!-- Chapter 2 -->
+  <section>
+    <div class="section-header">
+      <h2>Chapter 2 — Living in a Digital Society</h2>
+    </div>
+
+    <div class="chart">
+      <h3>5. Average Daily Outages by State/Territory</h3>
+      <div id="broadband_outages"></div>
+    </div>
+
+    <div class="chart">
+      <h3>6. Evolution of Payment Methods</h3>
+      <div id="payment_method_trend"></div>
+    </div>
+
+    <div class="chart">
+      <h3>7. Business Information Technology Adoption</h3>
+      <div id="business_it_adoption"></div>
+    </div>
+
+    <div class="chart">
+      <h3>8. Individual Devices Used in Households (National vs. Metro vs. Regional)</h3>
+      <div id="household_devices"></div>
+    </div>
+  </section>
+
+  <!-- Chapter 3 -->
+  <section>
+    <div class="section-header">
+      <h2>Chapter 3 — Who Benefits from Digital Progress?</h2>
+    </div>
+
+    <div class="chart">
+      <h3>9. Digital Ability Comparison Across Key Subgroups</h3>
+      <div id="digital_ability_comparison"></div>
+    </div>
+
+    <div class="chart">
+      <h3>10. Scam Reports by Demographic (Age & Gender)</h3>
+      <div id="scams_demographics"></div>
+    </div>
+  </section>
+
+  <!-- Chapter 4 -->
+  <section>
+    <div class="section-header">
+      <h2>Chapter 4 — The Risks of a Digital Future</h2>
+    </div>
+
+    <div class="chart">
+      <h3>11. Financial Losses from Scams by State</h3>
+      <div id="scams_amount_lost"></div>
+    </div>
+
+    <div class="chart">
+      <h3>12. Scam Reports by Contact Mode</h3>
+      <div id="scams_contact_mode"></div>
+    </div>
+
+    <div class="chart">
+      <h3>13. Scam Financial Impact and Report Volume by Age Group</h3>
+      <div id="scams_loss_by_age"></div>
+    </div>
+  </section>
+
+  <script type="text/javascript">
+    // Chapter 1
+    vegaEmbed('#nbn_map', 'jsons/nbn_map.json').catch(err => console.error('NBN Map Error:', err));
+    vegaEmbed('#optic_5g_map', 'jsons/optic_5g_map.json').catch(err => console.error('Optus Map Error:', err));
+    vegaEmbed('#mobile_coverage_map', 'jsons/mobile_map.json').catch(err => console.error('Mobile Map Error:', err));
+    vegaEmbed('#broadband_speed', 'jsons/broadband_speed.json').catch(err => console.error('Error:', err));
+
+    // Chapter 2
+    vegaEmbed('#broadband_outages', 'jsons/broadband_outages.json').catch(err => console.error('Error:', err));
+    vegaEmbed('#payment_method_trend', 'jsons/payment_method_trend.json').catch(err => console.error('Error:', err));
+    vegaEmbed('#business_it_adoption', 'jsons/business_it_adoption.json').catch(err => console.error('Error:', err));
+    vegaEmbed('#household_devices', 'jsons/household_devices.json').catch(err => console.error('Error:', err));
+
+    // Chapter 3
+    vegaEmbed('#digital_ability_comparison', 'jsons/digital_ability_comparison.json').catch(err => console.error('Error:', err));
+    vegaEmbed('#scams_demographics', 'jsons/scams_demographics.json').catch(err => console.error('Error:', err));
+
+    // Chapter 4
+    vegaEmbed('#scams_amount_lost', 'jsons/scams_amount_lost.json').catch(err => console.error('Error:', err));
+    vegaEmbed('#scams_contact_mode', 'jsons/scams_contact_mode.json').catch(err => console.error('Error:', err));
+    vegaEmbed('#scams_loss_by_age', 'jsons/scams_loss_by_age.json').catch(err => console.error('Error:', err));
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Evolution of payment methods in Australia (Normalized Stacked Area).",
+  "data": {"url": "../data/Payment_Method.csv"},
+  "transform": [
+    {
+      "fold": ["2007", "2010", "2013", "2016", "2019", "2022"],
+      "as": ["TIME_PERIOD", "OBS_VALUE"]
+    },
+    {
+      "calculate": "toNumber(datum.OBS_VALUE)",
+      "as": "OBS_VALUE"
+    }
+  ],
+  "mark": "area",
+  "encoding": {
+    "x": {"field": "TIME_PERIOD", "type": "ordinal", "title": "Year"},
+    "y": {
+      "aggregate": "sum",
+      "field": "OBS_VALUE",
+      "type": "quantitative",
+      "stack": "normalize",
+      "title": "Proportion (%)"
+    },
+    "color": {
+      "field": "Payment method",
+      "type": "nominal",
+      "title": "Payment Method",
+      "scale": {"scheme": "tableau10"}
+    },
+    "tooltip": [
+      {"field": "TIME_PERIOD", "type": "ordinal", "title": "Year"},
+      {"field": "Payment method", "type": "nominal", "title": "Method"},
+      {
+        "aggregate": "sum",
+        "field": "OBS_VALUE",
+        "type": "quantitative",
+        "title": "Value"
+      }
+    ]
+  },
+  "width": 800,
+  "height": 300
+}

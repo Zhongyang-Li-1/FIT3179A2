@@ -1,0 +1,30 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Total amount lost by state due to scams (Advanced Lollipop).",
+  "data": {"url": "../data/scams_summary_by_state.csv"},
+  "transform": [
+    {"calculate": "toNumber(replace(datum.Amount_lost, '$', ''))", "as": "Clean_Amount"}
+  ],
+  "layer": [
+    {
+      "mark": {"type": "rule", "strokeWidth": 3, "color": "#94a3b8"},
+      "encoding": {
+        "y": {"field": "Address_State", "type": "nominal", "sort": "-x"},
+        "x": {"aggregate": "sum", "field": "Clean_Amount", "type": "quantitative"}
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "size": 120, "color": "#e11d48"},
+      "encoding": {
+        "y": {"field": "Address_State", "type": "nominal", "sort": "-x", "title": "State"},
+        "x": {"aggregate": "sum", "field": "Clean_Amount", "type": "quantitative", "title": "Total Amount Lost ($)"},
+        "tooltip": [
+          {"field": "Address_State", "type": "nominal", "title": "State"},
+          {"aggregate": "sum", "field": "Clean_Amount", "type": "quantitative", "title": "Total Lost ($)", "format": "$,.2f"}
+        ]
+      }
+    }
+  ],
+  "width": 800,
+  "height": 300
+}

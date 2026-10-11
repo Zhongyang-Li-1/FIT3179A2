@@ -1,0 +1,23 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Advanced Lollipop Chart for Digital Ability Comparison",
+  "data": {"url": "../data/Digital Ability comparison.csv"},
+  "layer": [
+    {
+      "mark": {"type": "rule", "strokeWidth": 2, "color": "#cbd5e1"},
+      "encoding": {
+        "y": {"field": "Subgroup", "type": "nominal", "sort": "-x", "title": "Subgroup"},
+        "x": {"field": "Score", "type": "quantitative"},
+        "x2": {"value": 0}
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "size": 120},
+      "encoding": {
+        "y": {"field": "Subgroup", "type": "nominal", "sort": "-x"},
+        "x": {"field": "Score", "type": "quantitative", "title": "Score"},
+        "color": {"field": "Subgroup", "type": "nominal", "legend": null}
+      }
+    }
+  ]
+}

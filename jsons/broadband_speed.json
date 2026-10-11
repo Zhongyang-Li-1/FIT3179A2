@@ -1,0 +1,13 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A box plot showing download speed distribution by NBN technology type.",
+  "data": {"url": "../data/Measuring Broadband.csv"},
+  "mark": "boxplot",
+  "encoding": {
+    "x": {"field": "technology", "type": "nominal", "title": "Technology Type"},
+    "y": {"field": "All hour trimmed mean download speed", "type": "quantitative", "title": "Download Speed (Mbps)"},
+    "color": {"field": "technology", "type": "nominal"}
+  },
+  "width": 800,
+  "height": 300
+}

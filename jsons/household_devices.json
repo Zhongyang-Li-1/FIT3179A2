@@ -1,0 +1,75 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Dumbbell chart comparing Metro vs Regional device usage with National average",
+  "width": 600,
+  "height": 400,
+  "data": {
+    "values": [
+      {"Device": "Smartphone", "Nat": 93.3, "Metro": 94.1, "Regional": 91.8},
+      {"Device": "Portable laptop or notebook computer", "Nat": 68.8, "Metro": 70.1, "Regional": 66.1},
+      {"Device": "Smart TV", "Nat": 60.6, "Metro": 60.0, "Regional": 62.0},
+      {"Device": "Tablet (e.g. Apple iPad, Google Pixel Slate)", "Nat": 48.8, "Metro": 48.0, "Regional": 50.4},
+      {"Device": "Desktop computer", "Nat": 46.5, "Metro": 48.3, "Regional": 42.9},
+      {"Device": "Digital media player (e.g. Apple TV, Google Chromecast)", "Nat": 28.5, "Metro": 30.5, "Regional": 24.5},
+      {"Device": "Smartwatch (e.g. Apple Watch, Fossil Gen 5)", "Nat": 25.1, "Metro": 27.5, "Regional": 20.1},
+      {"Device": "Games console (e.g. Xbox, Switch)", "Nat": 24.1, "Metro": 25.3, "Regional": 21.6},
+      {"Device": "Smart appliance / home device (e.g. light, security system, fridge)", "Nat": 20.4, "Metro": 23.4, "Regional": 14.2},
+      {"Device": "Voice controlled smart speaker (e.g. Amazon Echo, Google Home)", "Nat": 19.1, "Metro": 21.5, "Regional": 14.1},
+      {"Device": "Fitness wearable device (e.g. Fitbit, Garmin)", "Nat": 12.6, "Metro": 13.5, "Regional": 10.8},
+      {"Device": "E-Reader (e.g. Kindle)", "Nat": 10.3, "Metro": 11.0, "Regional": 8.8}
+    ]
+  },
+  "encoding": {
+    "y": {
+      "field": "Device",
+      "type": "nominal",
+      "sort": {"field": "Metro", "op": "max", "order": "descending"},
+      "axis": {"title": "Device Type"}
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "rule", "strokeWidth": 2, "color": "#cbd5e1"},
+      "encoding": {
+        "x": {"field": "Regional", "type": "quantitative", "axis": {"title": "Percentage (%)"}},
+        "x2": {"field": "Metro"}
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "size": 100},
+      "encoding": {
+        "x": {"field": "Regional", "type": "quantitative"},
+        "color": {"value": "#f59e0b"},
+        "tooltip": [
+          {"field": "Device", "type": "nominal"},
+          {"field": "Regional", "type": "quantitative", "title": "Regional (%)", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "size": 100},
+      "encoding": {
+        "x": {"field": "Metro", "type": "quantitative"},
+        "color": {"value": "#10b981"},
+        "tooltip": [
+          {"field": "Device", "type": "nominal"},
+          {"field": "Metro", "type": "quantitative", "title": "Metro (%)", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "shape": "diamond", "size": 80},
+      "encoding": {
+        "x": {"field": "Nat", "type": "quantitative"},
+        "color": {"value": "#3b82f6"},
+        "tooltip": [
+          {"field": "Device", "type": "nominal"},
+          {"field": "Nat", "type": "quantitative", "title": "National (%)", "format": ".1f"}
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": null}
+  }
+}
