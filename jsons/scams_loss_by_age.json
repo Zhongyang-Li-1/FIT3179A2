@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Scam reports and financial loss correlation by age group (Advanced Bubble Chart).",
-  "data": {"url": "../data/scams_summary_by_state.csv"},
+  "data": {"url": "data/scams_summary_by_state.csv"},
   "transform": [
     {"calculate": "toNumber(replace(datum.Amount_lost, '$', ''))", "as": "Clean_Amount"}
   ],

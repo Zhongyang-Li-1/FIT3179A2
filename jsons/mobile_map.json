@@ -18,7 +18,7 @@
     },
     {
       "data": {
-        "url": "../data/mobile_coverage_optus_telstra_tpg.csv"
+        "url": "data/mobile_coverage_optus_telstra_tpg.csv"
       },
       "mark": {"type": "circle", "size": 30, "opacity": 0.7},
       "encoding": {

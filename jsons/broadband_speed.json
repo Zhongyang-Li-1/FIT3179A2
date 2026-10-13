@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "A box plot showing download speed distribution by NBN technology type.",
-  "data": {"url": "../data/Measuring Broadband.csv"},
+  "data": {"url": "data/Measuring_Broadband.csv"},
   "mark": "boxplot",
   "encoding": {
     "x": {"field": "technology", "type": "nominal", "title": "Technology Type"},

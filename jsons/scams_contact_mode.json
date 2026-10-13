@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Scam reports by contact mode (Pie Chart).",
-  "data": {"url": "../data/scams_summary_by_state.csv"},
+  "data": {"url": "data/scams_summary_by_state.csv"},
   "mark": {"type": "arc", "innerRadius": 80},
   "encoding": {
     "theta": {

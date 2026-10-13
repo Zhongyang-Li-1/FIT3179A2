@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Average daily outages by state or territory (Lollipop Chart).",
-  "data": {"url": "../data/Measuring Broadband.csv"},
+  "data": {"url": "data/Measuring_Broadband.csv"},
   "layer": [
     {
       "mark": {"type": "rule", "strokeWidth": 2, "color": "#cbd5e1"},

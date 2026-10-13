@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Business Use of Information Technology Heatmap.",
-  "data": {"url": "../data/Business_Use_of_Information_Technology.csv"},
+  "data": {"url": "data/Business_Use_of_Information_Technology.csv"},
   "mark": "rect",
   "encoding": {
     "x": {"field": "REF_AREA", "type": "nominal", "title": "Country / Area"},

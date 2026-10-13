@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Advanced Lollipop Chart for Digital Ability Comparison",
-  "data": {"url": "../data/Digital_Ability_comparison.csv"},
+  "data": {"url": "data/Digital_Ability_comparison.csv"},
   "layer": [
     {
       "mark": {"type": "rule", "strokeWidth": 2, "color": "#cbd5e1"},
