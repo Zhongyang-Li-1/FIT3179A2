@@ -51,6 +51,37 @@
       border-left: 4px solid #3b82f6; 
       padding-left: 10px; 
     }
+    /* 数据源板块样式 */
+    .data-sources {
+      margin-top: 60px;
+      padding: 24px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+    .data-sources h3 {
+      font-size: 1.25rem;
+      color: #1e3a8a;
+      margin-top: 0;
+      margin-bottom: 16px;
+      border-left: 4px solid #3b82f6;
+      padding-left: 10px;
+    }
+    .data-sources ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .data-sources li {
+      margin-bottom: 8px;
+    }
+    .data-sources a {
+      color: #2563eb;
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .data-sources a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -167,11 +198,27 @@
     </div>
   </section>
 
+  <!-- Data Sources Section -->
+  <footer class="data-sources">
+    <h3>Data Sources</h3>
+    <ul>
+      <li><a href="https://data.gov.au/data/dataset/accc-mobile-infrastructure-report-data-release" target="_blank">ACCC Mobile Infrastructure Report Data Release</a></li>
+      <li><a href="https://data.gov.au/data/dataset/national-broadband-network" target="_blank">National Broadband Network (NBN)</a></li>
+      <li><a href="https://data.gov.au/data/dataset/telecommunications-in-new-developments" target="_blank">Telecommunications in New Developments</a></li>
+      <li><a href="https://data.gov.au/data/dataset/australian-innovation-statistics" target="_blank">Australian Innovation Statistics</a></li>
+      <li><a href="https://data.gov.au/data/dataset/public-wifi-and-device-charging-sites" target="_blank">Public Wifi and Device Charging Sites</a></li>
+      <li><a href="https://data.gov.au/data/en/dataset/auyw-c39t" target="_blank">Australian Government Data (auyw-c39t)</a></li>
+      <li><a href="https://www.scamwatch.gov.au/research-and-resources/scam-statistics" target="_blank">Scamwatch Scam Statistics</a></li>
+      <li><a href="https://www.abs.gov.au/statistics/industry/technology-and-innovation/business-use-information-technology/latest-release" target="_blank">ABS Business Use of Information Technology</a></li>
+      <li><a href="https://www.rba.gov.au/payments-and-infrastructure/consumer-payments-explorer/" target="_blank">RBA Consumer Payments Explorer</a></li>
+    </ul>
+  </footer>
+
   <script type="text/javascript">
     // Chapter 1
     vegaEmbed('#nbn_map', 'jsons/nbn_map.json').catch(err => console.error('NBN Map Error:', err));
     vegaEmbed('#optic_5g_map', 'jsons/optic_5g_map.json').catch(err => console.error('Optus Map Error:', err));
-    vegaEmbed('#mobile_coverage_map', 'jsons/mobile_map.json').catch(err => console.error('Mobile Map Error:', err));
+    vegaEmbed('#mobile_coverage_map', 'jsons/mobile_map.json').catch(err => console.error('Error:', err));
     vegaEmbed('#broadband_speed', 'jsons/broadband_speed.json').catch(err => console.error('Error:', err));
 
     // Chapter 2
@@ -192,6 +239,3 @@
 
 </body>
 </html>
-
-
-

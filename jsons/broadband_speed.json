@@ -1,13 +1,89 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "A box plot showing download speed distribution by NBN technology type.",
-  "data": {"url": "data/Measuring_Broadband.csv"},
-  "mark": "boxplot",
-  "encoding": {
-    "x": {"field": "technology", "type": "nominal", "title": "Technology Type"},
-    "y": {"field": "All hour trimmed mean download speed", "type": "quantitative", "title": "Download Speed (Mbps)"},
-    "color": {"field": "technology", "type": "nominal"}
+  "description": "Broadband download speed distribution by Australian state and territory.",
+
+  "data": {
+    "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson",
+    "format": {
+      "type": "json",
+      "property": "features"
+    }
   },
+
+  "datasets": {
+    "state_mapping": [
+      {"abbr": "NSW", "full": "New South Wales"},
+      {"abbr": "VIC", "full": "Victoria"},
+      {"abbr": "QLD", "full": "Queensland"},
+      {"abbr": "SA", "full": "South Australia"},
+      {"abbr": "WA", "full": "Western Australia"},
+      {"abbr": "TAS", "full": "Tasmania"},
+      {"abbr": "NT", "full": "Northern Territory"},
+      {"abbr": "ACT", "full": "Australian Capital Territory"}
+    ]
+  },
+
+  "transform": [
+    {
+      "lookup": "properties.STATE_NAME",
+      "from": {
+        "data": {"name": "state_mapping"},
+        "key": "full",
+        "fields": ["abbr"]
+      },
+      "as": ["state_abbr"]
+    },
+    {
+      "calculate": "(datum.state_abbr === 'NT' || datum.state_abbr === 'SA') ? 'NT + SA' : datum.state_abbr",
+      "as": "csv_lookup_key"
+    },
+    {
+      "lookup": "csv_lookup_key",
+      "from": {
+        "data": {
+          "url": "data/Measuring_Broadband.csv",
+          "format": {"type": "csv"}
+        },
+        "key": "state_or_territory",
+        "fields": ["All hour trimmed mean download speed"]
+      },
+      "as": ["speed_val"]
+    },
+    {
+      "calculate": "toNumber(datum.speed_val)",
+      "as": "speed_val_num"
+    }
+  ],
+
+  "mark": {
+    "type": "geoshape",
+    "stroke": "white",
+    "strokeWidth": 1
+  },
+
+  "encoding": {
+    "color": {
+      "field": "speed_val_num",
+      "type": "quantitative",
+      "title": "Mean Download Speed (Mbps)",
+      "scale": {"scheme": "blues"}
+    },
+    "tooltip": [
+      {
+        "field": "properties.STATE_NAME",
+        "type": "nominal",
+        "title": "State/Territory"
+      },
+      {
+        "field": "speed_val_num",
+        "type": "quantitative",
+        "title": "Mean Download Speed (Mbps)",
+        "format": ".2f"
+      }
+    ]
+  },
+
+  "projection": {"type": "mercator"},
   "width": 800,
-  "height": 300
+  "height": 500
 }
