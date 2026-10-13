@@ -1,28 +1,101 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Average daily outages by state or territory (Lollipop Chart).",
-  "data": {"url": "data/Measuring_Broadband.csv"},
+  "description": "Proportional symbol map of average daily outages by Australian state and territory.",
+  
+  "data": {
+    "url": "data/Measuring_Broadband.csv",
+    "format": {"type": "csv"}
+  },
+
+  "datasets": {
+    "state_coords": [
+      {"abbr": "NSW", "full": "New South Wales", "lon": 147.2093, "lat": -31.8402},
+      {"abbr": "VIC", "full": "Victoria", "lon": 144.9631, "lat": -36.5986},
+      {"abbr": "QLD", "full": "Queensland", "lon": 144.2750, "lat": -20.9176},
+      {"abbr": "SA", "full": "South Australia", "lon": 135.7807, "lat": -30.0002},
+      {"abbr": "WA", "full": "Western Australia", "lon": 121.7583, "lat": -25.2984},
+      {"abbr": "TAS", "full": "Tasmania", "lon": 146.6021, "lat": -42.1540},
+      {"abbr": "NT", "full": "Northern Territory", "lon": 133.3823, "lat": -19.4914},
+      {"abbr": "ACT", "full": "Australian Capital Territory", "lon": 149.1300, "lat": -35.2809},
+      {"abbr": "NT + SA", "full": "NT + SA", "lon": 134.5, "lat": -25.0}
+    ]
+  },
+
+  "transform": [
+    {
+      "calculate": "toNumber(datum['Average daily outages'])",
+      "as": "outages_num"
+    }
+  ],
+
+  "projection": {"type": "mercator"},
+  "width": 800,
+  "height": 500,
+
   "layer": [
     {
-      "mark": {"type": "rule", "strokeWidth": 2, "color": "#cbd5e1"},
+      "data": {
+        "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson",
+        "format": {"type": "json", "property": "features"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#f1f5f9",
+        "stroke": "#cbd5e1",
+        "strokeWidth": 1
+      },
       "encoding": {
-        "x": {"field": "state_or_territory", "type": "nominal", "title": "State / Territory"},
-        "y": {"aggregate": "mean", "field": "Average daily outages", "type": "quantitative"}
+        "tooltip": [
+          {"field": "properties.STATE_NAME", "type": "nominal", "title": "State/Territory"}
+        ]
       }
     },
     {
-      "mark": {"type": "circle", "size": 100},
+      "transform": [
+        {
+          "aggregate": [
+            {"op": "mean", "field": "outages_num", "as": "mean_outages"}
+          ],
+          "groupby": ["state_or_territory"]
+        },
+        {
+          "lookup": "state_or_territory",
+          "from": {
+            "data": {"name": "state_coords"},
+            "key": "abbr",
+            "fields": ["lon", "lat", "full"]
+          },
+          "as": ["lon", "lat", "full_name"]
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "opacity": 0.8,
+        "stroke": "#ffffff",
+        "strokeWidth": 1
+      },
       "encoding": {
-        "x": {"field": "state_or_territory", "type": "nominal", "title": "State / Territory"},
-        "y": {"aggregate": "mean", "field": "Average daily outages", "type": "quantitative", "title": "Mean Daily Outages"},
-        "color": {"field": "state_or_territory", "type": "nominal", "legend": null},
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "size": {
+          "field": "mean_outages",
+          "type": "quantitative",
+          "title": "Mean Daily Outages",
+          "scale": {"range": [50, 1200]},
+          "legend": {
+            "symbolColor": "#64748b"
+          }
+        },
+        "color": {
+          "field": "state_or_territory",
+          "type": "nominal",
+          "legend": null
+        },
         "tooltip": [
-          {"field": "state_or_territory", "type": "nominal", "title": "State"},
-          {"aggregate": "mean", "field": "Average daily outages", "type": "quantitative", "title": "Mean Outages"}
+          {"field": "full_name", "type": "nominal", "title": "State / Territory"},
+          {"field": "mean_outages", "type": "quantitative", "title": "Mean Daily Outages", "format": ".4f"}
         ]
       }
     }
-  ],
-  "width": 800,
-  "height": 300
+  ]
 }
