@@ -24,7 +24,7 @@
     },
     {
       "data": {
-        "url": "data/coverage-map-optus-5g.geojson",
+        "url": "data/coverage_map_optus_5g.geojson",
         "format": {"type": "json", "property": "features"}
       },
       "mark": {
