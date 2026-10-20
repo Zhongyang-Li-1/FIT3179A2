@@ -1,8 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Evolution of payment methods in Australia (Normalized Stacked Area).",
+  "description": "Evolution of specific payment methods in Australia (Normalized Stacked Area).",
   "data": {"url": "data/Payment_Method.csv"},
   "transform": [
+    {
+      "filter": "indexof(['Debit_Online', 'Cash', 'Credit_Online', 'BPAY','Internet/phone banking'], datum['Payment method']) !== -1"
+    },
     {
       "fold": ["2007", "2010", "2013", "2016", "2019", "2022"],
       "as": ["TIME_PERIOD", "OBS_VALUE"]
