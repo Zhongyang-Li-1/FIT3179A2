@@ -2,11 +2,31 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Scam reports by complainant age and gender (Grouped Bar with enhanced design).",
   "data": {"url": "data/scams_summary_by_state.csv"},
+  "transform": [
+    {
+      "filter": "datum.Complainant_Gender !== null && datum.Complainant_Gender !== ''"
+    }
+  ],
   "mark": {"type": "bar", "cornerRadiusTopLeft": 3, "cornerRadiusTopRight": 3},
   "encoding": {
-    "x": {"field": "Complainant_Age", "type": "nominal", "title": "Age Group", "axis": {"labelAngle": 0}},
-    "y": {"aggregate": "sum", "field": "Number_of_reports", "type": "quantitative", "title": "Reports"},
-    "color": {"field": "Complainant_Gender", "type": "nominal", "title": "Gender", "scale": {"range": ["#3b82f6", "#ec4899", "#94a3b8"]}},
+    "x": {
+      "field": "Complainant_Age", 
+      "type": "nominal", 
+      "title": "Age Group", 
+      "axis": {"labelAngle": 0}
+    },
+    "y": {
+      "aggregate": "sum", 
+      "field": "Number_of_reports", 
+      "type": "quantitative", 
+      "title": "Reports"
+    },
+    "color": {
+      "field": "Complainant_Gender", 
+      "type": "nominal", 
+      "title": "Gender", 
+      "scale": {"range": ["#3b82f6", "#ec4899", "#94a3b8"]}
+    },
     "xOffset": {"field": "Complainant_Gender"},
     "tooltip": [
       {"field": "Complainant_Age", "type": "nominal", "title": "Age Group"},
@@ -14,6 +34,6 @@
       {"aggregate": "sum", "field": "Number_of_reports", "type": "quantitative", "title": "Reports"}
     ]
   },
-  "width": 800,
+  "width": 720,
   "height": 300
 }

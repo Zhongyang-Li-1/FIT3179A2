@@ -9,8 +9,18 @@
   "encoding": {
     "x": {"field": "Complainant_Age", "type": "nominal", "title": "Complainant Age Group"},
     "y": {"aggregate": "sum", "field": "Clean_Amount", "type": "quantitative", "title": "Total Amount Lost ($)"},
-    "size": {"aggregate": "sum", "field": "Number_of_reports", "type": "quantitative", "title": "Total Reports", "legend": {"symbolType": "circle"}},
-    "color": {"field": "Complainant_Age", "type": "nominal", "legend": null},
+    "size": {
+      "aggregate": "sum", 
+      "field": "Number_of_reports", 
+      "type": "quantitative", 
+      "title": "Total Reports", 
+      "legend": {"symbolType": "circle"}
+    },
+    "color": {
+      "field": "Complainant_Age", 
+      "type": "nominal", 
+      "title": "Age Group"
+    },
     "tooltip": [
       {"field": "Complainant_Age", "type": "nominal", "title": "Age Group"},
       {"aggregate": "sum", "field": "Number_of_reports", "type": "quantitative", "title": "Reports Count"},

@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Proportional symbol map of average daily outages by Australian state and territory.",
+  "description": "Proportional symbol map of average daily outages by Australian state and territory with text labels.",
   
   "data": {
     "url": "data/Measuring_Broadband.csv",
@@ -29,7 +29,7 @@
   ],
 
   "projection": {"type": "mercator"},
-  "width": 800,
+  "width": 700,
   "height": 500,
 
   "layer": [
@@ -82,19 +82,53 @@
           "type": "quantitative",
           "title": "Mean Daily Outages",
           "scale": {"range": [50, 1200]},
-          "legend": {
-            "symbolColor": "#64748b"
-          }
+          "legend": null
         },
         "color": {
           "field": "state_or_territory",
           "type": "nominal",
-          "legend": null
+          "title": "State / Territory",
+          "scale": {"scheme": "tableau10"}
         },
         "tooltip": [
           {"field": "full_name", "type": "nominal", "title": "State / Territory"},
           {"field": "mean_outages", "type": "quantitative", "title": "Mean Daily Outages", "format": ".4f"}
         ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [
+            {"op": "mean", "field": "outages_num", "as": "mean_outages"}
+          ],
+          "groupby": ["state_or_territory"]
+        },
+        {
+          "lookup": "state_or_territory",
+          "from": {
+            "data": {"name": "state_coords"},
+            "key": "abbr",
+            "fields": ["lon", "lat", "full"]
+          },
+          "as": ["lon", "lat", "full_name"]
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "dy": -16,
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "fill": "#334155"
+      },
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "text": {
+          "field": "mean_outages",
+          "type": "quantitative",
+          "format": ".2f"
+        }
       }
     }
   ]

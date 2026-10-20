@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Dumbbell chart comparing Metro vs Regional device usage with National average",
-  "width": 600,
+  "width": 700,
   "height": 400,
   "data": {
     "values": [
@@ -36,35 +36,34 @@
       }
     },
     {
+      "transform": [
+        {"fold": ["Regional", "Metro", "Nat"], "as": ["Category", "Percentage"]}
+      ],
       "mark": {"type": "point", "filled": true, "size": 100},
       "encoding": {
-        "x": {"field": "Regional", "type": "quantitative"},
-        "color": {"value": "#f59e0b"},
+        "x": {"field": "Percentage", "type": "quantitative"},
+        "color": {
+          "field": "Category",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Regional", "Metro", "Nat"],
+            "range": ["#f59e0b", "#10b981", "#3b82f6"]
+          },
+          "legend": {"title": "Device Usage", "orient": "bottom"}
+        },
+        "shape": {
+          "field": "Category",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Regional", "Metro", "Nat"],
+            "range": ["circle", "circle", "diamond"]
+          },
+          "legend": null
+        },
         "tooltip": [
           {"field": "Device", "type": "nominal"},
-          {"field": "Regional", "type": "quantitative", "title": "Regional (%)", "format": ".1f"}
-        ]
-      }
-    },
-    {
-      "mark": {"type": "point", "filled": true, "size": 100},
-      "encoding": {
-        "x": {"field": "Metro", "type": "quantitative"},
-        "color": {"value": "#10b981"},
-        "tooltip": [
-          {"field": "Device", "type": "nominal"},
-          {"field": "Metro", "type": "quantitative", "title": "Metro (%)", "format": ".1f"}
-        ]
-      }
-    },
-    {
-      "mark": {"type": "point", "filled": true, "shape": "diamond", "size": 80},
-      "encoding": {
-        "x": {"field": "Nat", "type": "quantitative"},
-        "color": {"value": "#3b82f6"},
-        "tooltip": [
-          {"field": "Device", "type": "nominal"},
-          {"field": "Nat", "type": "quantitative", "title": "National (%)", "format": ".1f"}
+          {"field": "Category", "type": "nominal", "title": "Category"},
+          {"field": "Percentage", "type": "quantitative", "title": "Percentage (%)", "format": ".1f"}
         ]
       }
     }

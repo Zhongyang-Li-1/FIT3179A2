@@ -23,13 +23,13 @@
   "layer": [
     {
       "data": {
-        "url": "data/SA3.json",
+        "url": "data/states.geojson",
         "format": {"type": "json", "property": "features"}
       },
       "mark": {
         "type": "geoshape",
         "fill": "#eae5e5",
-        "stroke": "#ffffff",
+        "stroke": "#0d0d0d",
         "strokeWidth": 0.8
       }
     },
@@ -45,7 +45,7 @@
       "mark": {
         "type": "circle",
         "size": 25,
-        "opacity": 0.65
+        "opacity": 0.75
       },
       "encoding": {
         "longitude": {"field": "Longitude", "type": "quantitative"},
@@ -56,7 +56,7 @@
           "title": "Operator",
           "scale": {
             "domain": ["Telstra", "Optus", "TPG"],
-            "range": ["#002b49", "#da291c", "#6b2d5c"]
+            "range": ["#0072B2", "#D55E00", "#009E73"]
           }
         },
         "tooltip": [

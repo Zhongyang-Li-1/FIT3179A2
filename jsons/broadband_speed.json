@@ -1,14 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Broadband download speed distribution by Australian state and territory.",
-
-  "data": {
-    "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson",
-    "format": {
-      "type": "json",
-      "property": "features"
-    }
-  },
+  "description": "Broadband download speed distribution by Australian state and territory with region and speed labels.",
 
   "datasets": {
     "state_mapping": [
@@ -20,71 +12,146 @@
       {"abbr": "TAS", "full": "Tasmania"},
       {"abbr": "NT", "full": "Northern Territory"},
       {"abbr": "ACT", "full": "Australian Capital Territory"}
-    ]
-  },
-
-  "transform": [
-    {
-      "lookup": "properties.STATE_NAME",
-      "from": {
-        "data": {"name": "state_mapping"},
-        "key": "full",
-        "fields": ["abbr"]
-      },
-      "as": ["state_abbr"]
-    },
-    {
-      "calculate": "(datum.state_abbr === 'NT' || datum.state_abbr === 'SA') ? 'NT + SA' : datum.state_abbr",
-      "as": "csv_lookup_key"
-    },
-    {
-      "lookup": "csv_lookup_key",
-      "from": {
-        "data": {
-          "url": "data/Measuring_Broadband.csv",
-          "format": {"type": "csv"}
-        },
-        "key": "state_or_territory",
-        "fields": ["All hour trimmed mean download speed"]
-      },
-      "as": ["speed_val"]
-    },
-    {
-      "calculate": "toNumber(datum.speed_val)",
-      "as": "speed_val_num"
-    }
-  ],
-
-  "mark": {
-    "type": "geoshape",
-    "stroke": "white",
-    "strokeWidth": 1
-  },
-
-  "encoding": {
-    "color": {
-      "field": "speed_val_num",
-      "type": "quantitative",
-      "title": "Mean Download Speed (Mbps)",
-      "scale": {"scheme": "blues"}
-    },
-    "tooltip": [
-      {
-        "field": "properties.STATE_NAME",
-        "type": "nominal",
-        "title": "State/Territory"
-      },
-      {
-        "field": "speed_val_num",
-        "type": "quantitative",
-        "title": "Mean Download Speed (Mbps)",
-        "format": ".2f"
-      }
+    ],
+    "state_centers": [
+      {"abbr": "NSW", "full": "New South Wales", "longitude": 147.0, "latitude": -32.0},
+      {"abbr": "VIC", "full": "Victoria", "longitude": 145.0, "latitude": -37.5},
+      {"abbr": "QLD", "full": "Queensland", "longitude": 144.0, "latitude": -22.5},
+      {"abbr": "SA", "full": "South Australia", "longitude": 135.0, "latitude": -30.0},
+      {"abbr": "WA", "full": "Western Australia", "longitude": 122.0, "latitude": -25.0},
+      {"abbr": "TAS", "full": "Tasmania", "longitude": 146.5, "latitude": -42.0},
+      {"abbr": "NT", "full": "Northern Territory", "longitude": 133.0, "latitude": -20.0},
+      {"abbr": "ACT", "full": "Australian Capital Territory", "longitude": 149.13, "latitude": -35.28}
     ]
   },
 
   "projection": {"type": "mercator"},
-  "width": 800,
-  "height": 500
-}
+  "width": 750,
+  "height": 500,
 
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "lookup": "properties.STATE_NAME",
+          "from": {
+            "data": {"name": "state_mapping"},
+            "key": "full",
+            "fields": ["abbr"]
+          },
+          "as": ["state_abbr"]
+        },
+        {
+          "calculate": "(datum.state_abbr === 'NT' || datum.state_abbr === 'SA') ? 'NT + SA' : datum.state_abbr",
+          "as": "csv_lookup_key"
+        },
+        {
+          "lookup": "csv_lookup_key",
+          "from": {
+            "data": {
+              "url": "data/Measuring_Broadband.csv",
+              "format": {"type": "csv"}
+            },
+            "key": "state_or_territory",
+            "fields": ["All hour trimmed mean download speed"]
+          },
+          "as": ["speed_val"]
+        },
+        {
+          "calculate": "toNumber(datum.speed_val)",
+          "as": "speed_val_num"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "white",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "color": {
+          "field": "speed_val_num",
+          "type": "quantitative",
+          "title": "Mean Download Speed (Mbps)",
+          "scale": {"scheme": "blues"}
+        },
+        "tooltip": [
+          {
+            "field": "properties.STATE_NAME",
+            "type": "nominal",
+            "title": "State/Territory"
+          },
+          {
+            "field": "speed_val_num",
+            "type": "quantitative",
+            "title": "Mean Download Speed (Mbps)",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "name": "state_centers"
+      },
+      "transform": [
+        {
+          "calculate": "(datum.abbr === 'NT' || datum.abbr === 'SA') ? 'NT + SA' : datum.abbr",
+          "as": "csv_lookup_key"
+        },
+        {
+          "lookup": "csv_lookup_key",
+          "from": {
+            "data": {
+              "url": "data/Measuring_Broadband.csv",
+              "format": {"type": "csv"}
+            },
+            "key": "state_or_territory",
+            "fields": ["All hour trimmed mean download speed"]
+          },
+          "as": ["speed_val"]
+        },
+        {
+          "calculate": "toNumber(datum.speed_val)",
+          "as": "speed_val_num"
+        },
+        {
+          "calculate": "datum.abbr + ': ' + format(datum.speed_val_num, '.1f') + ' Mbps'",
+          "as": "label_text"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label_text",
+          "type": "nominal"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.speed_val_num > 70",
+            "value": "black"
+          },
+          "value": "black"
+        }
+      }
+    }
+  ]
+}
